@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:spiffworkflow="http://spiffworkflow.org/bpmn/schema/1.0/core" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.34.0">
+  <bpmn:process id="process_1" isExecutable="true">
+    <bpmn:startEvent id="start_1">
+      <bpmn:outgoing>flow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="task_1" name="Assess Health Check Data Availability">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="op_task_1" resultVariable="assess_health_check_data_availability">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="param_1" type="str" value="Health_Check" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>flow_1</bpmn:incoming>
+      <bpmn:outgoing>flow_2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="gateway_1" name="Check Health Check Data Availability" default="flow_4">
+      <bpmn:incoming>flow_2</bpmn:incoming>
+      <bpmn:outgoing>flow_3</bpmn:outgoing>
+      <bpmn:outgoing>flow_4</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="task_2" name="Evaluate Exclusion Criteria">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="op_task_2" resultVariable="evaluate_exclusion_criteria">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="param_1" type="str" value="Cancer" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>flow_3</bpmn:incoming>
+      <bpmn:outgoing>flow_5</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="gateway_2" name="Check Cancer Exclusion" default="flow_7">
+      <bpmn:incoming>flow_5</bpmn:incoming>
+      <bpmn:outgoing>flow_6</bpmn:outgoing>
+      <bpmn:outgoing>flow_7</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="task_3" name="Evaluate Inclusion Eligibility">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="op_task_3" resultVariable="evaluate_inclusion_eligibility">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="param_1" type="str" value="Fasting_Blood_Glucose" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>flow_7</bpmn:incoming>
+      <bpmn:outgoing>flow_8</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="gateway_3" name="Check Inclusion Eligibility" default="flow_10">
+      <bpmn:incoming>flow_8</bpmn:incoming>
+      <bpmn:outgoing>flow_9</bpmn:outgoing>
+      <bpmn:outgoing>flow_10</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="task_4" name="Notify Health Guidance Eligibility">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="op_task_4" resultVariable="notify_health_guidance_eligibility">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="param_1" type="str" value="&#39;notification&#39;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>flow_9</bpmn:incoming>
+      <bpmn:outgoing>flow_11</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="gateway_4" name="Check Health Guidance Acceptance" default="flow_13">
+      <bpmn:incoming>flow_11</bpmn:incoming>
+      <bpmn:outgoing>flow_12</bpmn:outgoing>
+      <bpmn:outgoing>flow_13</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="task_5" name="Provide Health Guidance Sessions">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="op_task_5" resultVariable="provide_health_guidance_sessions">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="param_1" type="int" value="6" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>flow_12</bpmn:incoming>
+      <bpmn:outgoing>flow_14</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="task_6" name="Conduct Post-Implementation Follow-Up">
+      <bpmn:extensionElements>
+        <spiffworkflow:serviceTaskOperator id="op_task_6" resultVariable="conduct_post_implementation_follow_up">
+          <spiffworkflow:parameters>
+            <spiffworkflow:parameter id="param_1" type="str" value="&#39;follow_up&#39;" />
+          </spiffworkflow:parameters>
+        </spiffworkflow:serviceTaskOperator>
+      </bpmn:extensionElements>
+      <bpmn:incoming>flow_14</bpmn:incoming>
+      <bpmn:outgoing>flow_15</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="end_1">
+      <bpmn:incoming>flow_4</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="end_2">
+      <bpmn:incoming>flow_6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="end_3">
+      <bpmn:incoming>flow_10</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="end_4">
+      <bpmn:incoming>flow_13</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="end_5">
+      <bpmn:incoming>flow_15</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="flow_1" sourceRef="start_1" targetRef="task_1" />
+    <bpmn:sequenceFlow id="flow_2" sourceRef="task_1" targetRef="gateway_1" />
+    <bpmn:sequenceFlow id="flow_3" sourceRef="gateway_1" targetRef="task_2" />
+    <bpmn:sequenceFlow id="flow_4" sourceRef="gateway_1" targetRef="end_1" />
+    <bpmn:sequenceFlow id="flow_5" sourceRef="task_2" targetRef="gateway_2" />
+    <bpmn:sequenceFlow id="flow_6" sourceRef="gateway_2" targetRef="end_2" />
+    <bpmn:sequenceFlow id="flow_7" sourceRef="gateway_2" targetRef="task_3" />
+    <bpmn:sequenceFlow id="flow_8" sourceRef="task_3" targetRef="gateway_3" />
+    <bpmn:sequenceFlow id="flow_9" sourceRef="gateway_3" targetRef="task_4" />
+    <bpmn:sequenceFlow id="flow_10" sourceRef="gateway_3" targetRef="end_3" />
+    <bpmn:sequenceFlow id="flow_11" sourceRef="task_4" targetRef="gateway_4" />
+    <bpmn:sequenceFlow id="flow_12" sourceRef="gateway_4" targetRef="task_5" />
+    <bpmn:sequenceFlow id="flow_13" sourceRef="gateway_4" targetRef="end_4" />
+    <bpmn:sequenceFlow id="flow_14" sourceRef="task_5" targetRef="task_6" />
+    <bpmn:sequenceFlow id="flow_15" sourceRef="task_6" targetRef="end_5" />
+  </bpmn:process>
+  <ns0:BPMNDiagram xmlns:ns0="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="BPMNDiagram_process_1">
+    <ns0:BPMNPlane id="BPMNPlane_process_1" bpmnElement="process_1">
+      <ns0:BPMNShape id="Shape_start_1" bpmnElement="start_1">
+        <ns1:Bounds xmlns:ns1="http://www.omg.org/spec/DD/20100524/DC" x="132" y="182" width="36" height="36" />
+      </ns0:BPMNShape>
+      <ns0:BPMNShape id="Shape_task_1" bpmnElement="task_1">
+        <ns2:Bounds xmlns:ns2="http://www.omg.org/spec/DD/20100524/DC" x="220" y="160" width="100" height="80" />
+      </ns0:BPMNShape>
+      <ns0:BPMNShape id="Shape_gateway_1" bpmnElement="gateway_1" isMarkerVisible="true">
+        <ns3:Bounds xmlns:ns3="http://www.omg.org/spec/DD/20100524/DC" x="375" y="175" width="50" height="50" />
+        <ns0:BPMNLabel>
+          <dc:Bounds x="367" y="225" width="67" height="40" />
+        </ns0:BPMNLabel>
+      </ns0:BPMNShape>
+      <ns0:BPMNShape id="Shape_end_1" bpmnElement="end_1">
+        <ns12:Bounds xmlns:ns12="http://www.omg.org/spec/DD/20100524/DC" x="382" y="80" width="36" height="36" />
+      </ns0:BPMNShape>
+      <ns0:BPMNShape id="Shape_task_2" bpmnElement="task_2">
+        <ns4:Bounds xmlns:ns4="http://www.omg.org/spec/DD/20100524/DC" x="500" y="160" width="100" height="80" />
+      </ns0:BPMNShape>
+      <ns0:BPMNShape id="Shape_gateway_2" bpmnElement="gateway_2" isMarkerVisible="true">
+        <ns5:Bounds xmlns:ns5="http://www.omg.org/spec/DD/20100524/DC" x="675" y="175" width="50" height="50" />
+        <ns0:BPMNLabel>
+          <dc:Bounds x="664" y="225" width="72" height="27" />
+        </ns0:BPMNLabel>
+      </ns0:BPMNShape>
+      <ns0:BPMNShape id="Shape_end_2" bpmnElement="end_2">
+        <ns13:Bounds xmlns:ns13="http://www.omg.org/spec/DD/20100524/DC" x="682" y="80" width="36" height="36" />
+      </ns0:BPMNShape>
+      <ns0:BPMNShape id="Shape_task_3" bpmnElement="task_3">
+        <ns6:Bounds xmlns:ns6="http://www.omg.org/spec/DD/20100524/DC" x="800" y="160" width="100" height="80" />
+      </ns0:BPMNShape>
+      <ns0:BPMNShape id="Shape_gateway_3" bpmnElement="gateway_3" isMarkerVisible="true">
+        <ns7:Bounds xmlns:ns7="http://www.omg.org/spec/DD/20100524/DC" x="965" y="175" width="50" height="50" />
+        <ns0:BPMNLabel>
+          <dc:Bounds x="951" y="225" width="78" height="27" />
+        </ns0:BPMNLabel>
+      </ns0:BPMNShape>
+      <ns0:BPMNShape id="Shape_end_3" bpmnElement="end_3">
+        <ns14:Bounds xmlns:ns14="http://www.omg.org/spec/DD/20100524/DC" x="972" y="80" width="36" height="36" />
+      </ns0:BPMNShape>
+      <ns0:BPMNShape id="Shape_task_4" bpmnElement="task_4">
+        <ns8:Bounds xmlns:ns8="http://www.omg.org/spec/DD/20100524/DC" x="1110" y="160" width="100" height="80" />
+      </ns0:BPMNShape>
+      <ns0:BPMNShape id="Shape_end_5" bpmnElement="end_5">
+        <ns16:Bounds xmlns:ns16="http://www.omg.org/spec/DD/20100524/DC" x="642" y="332" width="36" height="36" />
+      </ns0:BPMNShape>
+      <ns0:BPMNShape id="Shape_task_6" bpmnElement="task_6">
+        <ns11:Bounds xmlns:ns11="http://www.omg.org/spec/DD/20100524/DC" x="760" y="310" width="100" height="80" />
+      </ns0:BPMNShape>
+      <ns0:BPMNShape id="Shape_task_5" bpmnElement="task_5">
+        <ns10:Bounds xmlns:ns10="http://www.omg.org/spec/DD/20100524/DC" x="970" y="310" width="100" height="80" />
+      </ns0:BPMNShape>
+      <ns0:BPMNShape id="Shape_gateway_4" bpmnElement="gateway_4" isMarkerVisible="true">
+        <ns9:Bounds xmlns:ns9="http://www.omg.org/spec/DD/20100524/DC" x="1215" y="325" width="50" height="50" />
+        <ns0:BPMNLabel>
+          <dc:Bounds x="1207" y="375" width="67" height="40" />
+        </ns0:BPMNLabel>
+      </ns0:BPMNShape>
+      <ns0:BPMNShape id="Shape_end_4" bpmnElement="end_4">
+        <ns15:Bounds xmlns:ns15="http://www.omg.org/spec/DD/20100524/DC" x="1222" y="242" width="36" height="36" />
+      </ns0:BPMNShape>
+      <ns0:BPMNEdge id="Edge_flow_1" bpmnElement="flow_1">
+        <di:waypoint x="168" y="200" />
+        <di:waypoint x="220" y="200" />
+      </ns0:BPMNEdge>
+      <ns0:BPMNEdge id="Edge_flow_2" bpmnElement="flow_2">
+        <di:waypoint x="320" y="200" />
+        <di:waypoint x="375" y="200" />
+      </ns0:BPMNEdge>
+      <ns0:BPMNEdge id="Edge_flow_3" bpmnElement="flow_3">
+        <di:waypoint x="425" y="200" />
+        <di:waypoint x="500" y="200" />
+      </ns0:BPMNEdge>
+      <ns0:BPMNEdge id="Edge_flow_4" bpmnElement="flow_4">
+        <di:waypoint x="400" y="175" />
+        <di:waypoint x="400" y="116" />
+      </ns0:BPMNEdge>
+      <ns0:BPMNEdge id="Edge_flow_5" bpmnElement="flow_5">
+        <di:waypoint x="600" y="200" />
+        <di:waypoint x="675" y="200" />
+      </ns0:BPMNEdge>
+      <ns0:BPMNEdge id="Edge_flow_6" bpmnElement="flow_6">
+        <di:waypoint x="700" y="175" />
+        <di:waypoint x="700" y="116" />
+      </ns0:BPMNEdge>
+      <ns0:BPMNEdge id="Edge_flow_7" bpmnElement="flow_7">
+        <di:waypoint x="725" y="200" />
+        <di:waypoint x="800" y="200" />
+      </ns0:BPMNEdge>
+      <ns0:BPMNEdge id="Edge_flow_8" bpmnElement="flow_8">
+        <di:waypoint x="900" y="200" />
+        <di:waypoint x="965" y="200" />
+      </ns0:BPMNEdge>
+      <ns0:BPMNEdge id="Edge_flow_9" bpmnElement="flow_9">
+        <di:waypoint x="1015" y="200" />
+        <di:waypoint x="1110" y="200" />
+      </ns0:BPMNEdge>
+      <ns0:BPMNEdge id="Edge_flow_10" bpmnElement="flow_10">
+        <di:waypoint x="990" y="175" />
+        <di:waypoint x="990" y="116" />
+      </ns0:BPMNEdge>
+      <ns0:BPMNEdge id="Edge_flow_11" bpmnElement="flow_11">
+        <di:waypoint x="1210" y="200" />
+        <di:waypoint x="1310" y="200" />
+        <di:waypoint x="1310" y="350" />
+        <di:waypoint x="1265" y="350" />
+      </ns0:BPMNEdge>
+      <ns0:BPMNEdge id="Edge_flow_12" bpmnElement="flow_12">
+        <di:waypoint x="1215" y="350" />
+        <di:waypoint x="1070" y="350" />
+      </ns0:BPMNEdge>
+      <ns0:BPMNEdge id="Edge_flow_13" bpmnElement="flow_13">
+        <di:waypoint x="1240" y="325" />
+        <di:waypoint x="1240" y="278" />
+      </ns0:BPMNEdge>
+      <ns0:BPMNEdge id="Edge_flow_14" bpmnElement="flow_14">
+        <di:waypoint x="970" y="350" />
+        <di:waypoint x="860" y="350" />
+      </ns0:BPMNEdge>
+      <ns0:BPMNEdge id="Edge_flow_15" bpmnElement="flow_15">
+        <di:waypoint x="760" y="350" />
+        <di:waypoint x="678" y="350" />
+      </ns0:BPMNEdge>
+    </ns0:BPMNPlane>
+  </ns0:BPMNDiagram>
+</bpmn:definitions>
