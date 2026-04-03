@@ -1,5 +1,3 @@
-# Policy Twin
-
 A policy formalization and repair tool that converts ambiguous natural-language health policies into formally verified, database-executable BPMN workflows. The tool is demonstrated on a Japanese municipal diabetic nephropathy health guidance program.
 
 ---
@@ -27,8 +25,8 @@ Policy Twin/
 │   ├── city_1_ambiguity_report.pdf      # Documentation of all identified ambiguities
 │   ├── city_1_repair_report.pdf         # Summary of changes made during repair
 │   ├── city_1_narrative.pdf             # Formal logical analysis and database-executable expressions
-│   ├── city_1_reference.bpmn            # BPMN workflow (reference/pre-repair)
-│   ├── city_1_target.bpmn               # BPMN workflow (target/post-repair)
+│   ├── city_1_reference.bpmn            # BPMN workflow (reference model)
+│   ├── city_1_target.bpmn               # BPMN workflow (target model)
 │   ├── city_1_reference.png             # Diagram of reference process
 │   └── city_1_target.png               # Diagram of target process
 ├── city-2/                              # Case study: City 2 (same structure as city-1)
@@ -83,33 +81,6 @@ BPMN Workflow Generation
     Produce executable process diagram from formal expressions
     ↓
 Outputs: Repaired Policy + BPMN + Ambiguity Report + Repair Report
-```
-
----
-
-## Business Process (BPMN)
-
-The executable workflow implements 7 sequential tasks with decision gates:
-
-| Step | Task | Condition to Continue |
-|---|---|---|
-| 1 | Verify Health Check Data | `Health_Check == 1` |
-| 2 | Check Cancer Exclusion | `Cancer != 1` |
-| 3 | Assess Clinical Eligibility | Diabetes + kidney function criteria met |
-| 4 | Notify Health Guidance Eligibility | Always (send recommendation) |
-| 5 | Check Health Guidance Acceptance | `Health_Guidance == 1` |
-| 6 | Provide Health Guidance Sessions | 6 monthly sessions over 6 months |
-| 7 | Conduct Post-Guidance Evaluation & Follow-Up | Assess HbA1c, eGFR, urinary protein changes |
-
-### Eligibility Logic (Formal Expression)
-
-```
-Health_Check == 1
-AND Type_2_Diabetes_Prior_Year_Jan_to_Dec == 1
-AND Diabetes_Under_Treatment == 1
-AND (Fasting_Blood_Glucose >= 126 OR HbA1c >= 6.5)
-AND ((eGFR >= 30 AND eGFR <= 60) OR Urinary_Protein >= 1)
-AND NOT (Cancer == 1)
 ```
 
 ---
