@@ -34,6 +34,8 @@ Policy Twin/
 │   └── test_data.csv                    # Synthetic patient dataset (100 records)
 ├── supplemental_material.pdf            # Ministry-level guidelines and specifications
 ├── supplemental_material_narrative.pdf  # Formal database-executable narratives (ministry level)
+├── prompt_ambiguity_detection.pdf       # LLM prompt templates for ambiguity detection
+├── prompt_ambiguity_elimination.pdf     # LLM prompt template for ambiguity elimination
 └── tool-demo-movie.mp4                  # Video demonstration of the tool
 ```
 
@@ -82,6 +84,42 @@ BPMN Workflow Generation
     ↓
 Outputs: Repaired Policy + BPMN + Ambiguity Report + Repair Report
 ```
+
+---
+
+## LLM Prompt Templates
+
+Two PDF files contain the prompt templates used to drive the LLM-based steps of the pipeline.
+
+### `prompt_ambiguity_detection.pdf`
+
+Defines two prompt variants for identifying ambiguities in a process narrative by comparing a reference BPMN model against a target BPMN model:
+
+| Prompt | Inputs | Purpose |
+|---|---|---|
+| `ambiguity_detection` | Process narrative + reference BPMN + target BPMN + MBD diagnosis results | Uses model-based diagnosis (MBD) output to ground each ambiguity in a diagnosed gateway, then traces it back to the narrative text |
+| `ambiguity_detection_without_diagnosis` | Process narrative + reference BPMN + target BPMN | Compares the two models structurally and semantically (no MBD), then traces each structural difference back to ambiguous narrative text |
+
+Both variants output a JSON object with an `ambiguous_elements` list. Each entry contains:
+- `ambiguity_id` — unique identifier
+- `narrative_excerpt` — verbatim quoted text from the narrative
+- `ambiguity_analysis` — explanation of why the text admits multiple interpretations, with one interpretation per BPMN model
+
+### `prompt_ambiguity_elimination.pdf`
+
+Defines the `ambiguity_elimination` prompt, which takes the identified ambiguities and produces a minimally-revised narrative that resolves them.
+
+| Input | Description |
+|---|---|
+| Original process narrative | The raw narrative to be revised |
+| Ambiguity report (JSON) | Output from the detection step |
+| Supplemental material | Ministry guidelines used to choose between interpretations |
+
+The prompt revises only the ambiguous excerpts — making logical groupings explicit (e.g., using parentheses for AND/OR conditions) — without changing process ordering, eligibility logic, or adding information not present in the original narrative or supplemental material.
+
+Output is a JSON object with:
+- `revised_process_narrative` — the complete revised narrative
+- `ambiguity_revisions` — per-ambiguity record of what changed, why, and which supplemental excerpt supports the chosen interpretation
 
 ---
 
